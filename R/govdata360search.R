@@ -10,7 +10,6 @@
 #' @export
 gov360msearch <- function(nameSearch="", sourceSearch=""){
   
-  
   url <- gov360IndURL()
   indURL <- "indicators/"
   indicatorsGov360 <<- govdata360get.raw(paste0(url,indURL)) 

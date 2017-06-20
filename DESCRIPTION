@@ -1,4 +1,4 @@
-Package: idbstats
+Package: govdata360
 Type: Package
 Title: Access to the data and statistics from GovData360 from the WorldBank
 Version: 1.0
