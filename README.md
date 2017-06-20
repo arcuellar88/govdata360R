@@ -1,7 +1,9 @@
-#R library to download data form the Inter-American Development Bank
-##Numbers for Development
+#R library to download data form the GovData360 
+##GovData360
+ 
+#World Bank GovData360
 
-The Inter-american development bank has a lot of data  on Latin American and Caribbean countries at a granular level not available in other sources. https://data.iadb.org/NumbersForDevelopment/NumbersForDevelopment
+http://govdata360.worldbank.org/
 
 #Based on:
 https://github.com/vincentarelbundock/WDI
@@ -10,8 +12,8 @@ https://github.com/vincentarelbundock/WDI
 ```r
 install.packages('devtools')
 library(devtools)
-install_github('arcuellar88/iadbstats')
-library('idbstats') 
+install_github('arcuellar88/govdata360R')
+library('govdata360R') 
 ```
 # Searching metadata of the indicators
 
