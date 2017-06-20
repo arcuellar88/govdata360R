@@ -9,26 +9,26 @@
 #' gov360msearch()
 #' @export
 gov360msearch <- function(nameSearch="", sourceSearch=""){
-  
+
   url <- gov360IndURL()
   indURL <- "indicators/"
-  indicatorsGov360 <<- govdata360get.raw(paste0(url,indURL)) 
-  
+  indicatorsGov360 <- govdata360get.raw(paste0(url,indURL))
+
   if(nameSearch!="")
   {
     indicators <- subset(indicatorsGov360, grepl(nameSearch, name,ignore.case=TRUE))
   }
-  
+
   if(sourceSearch!="")
   {
     indicators <- subset(indicatorsGov360, grepl(sourceSearch, dataset,ignore.case=TRUE))
   }
-  
+
   if(nameSearch=="" && sourceSearch=="")
   {
     indicators <- indicatorsGov360
   }
-  
+
   indicators
 
 }
