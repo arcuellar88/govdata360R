@@ -71,7 +71,7 @@ gov360stats.list <- function(dateRange="2010",indicatorCodes){
   for(i in 1:length(df))
   {
     #Pull the data for a subset of 10 indicators
-    ind = paste(as.character(df[[1]]),collapse=",")
+    ind = paste(as.character(df[[i]]),collapse=",")
     print(ind)
     indicator_list[[i]] = gov360stats(country=scountry,dateRange=dateRange,indicatorcode=ind)
   }  
