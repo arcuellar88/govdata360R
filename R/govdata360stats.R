@@ -79,6 +79,8 @@ gov360stats.list <- function(dateRange="2010",indicatorCodes){
   #Combine results into one data frame
   full_data = dplyr::bind_rows(indicator_list) 
   
+  full_data <- full_data[!is.na(full_data$value),] #remove rows where value=NA
+  
   full_data
 }
 
