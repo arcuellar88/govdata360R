@@ -28,14 +28,15 @@ govdata360get.rawInd <- function(url) {
 
       countryData[[c]] = cbind(country,return_list$data$indicators[[c]][-2])
 
+      #Transforma data
+      countryData[[c]] = countryData[[c]] %>% gather('year','value',3:length(countryData[[c]]))
+
+      countryData[[c]] <-  countryData[[c]][!is.na( countryData[[c]]$value),] #remove rows where value=NA
     }
 
 
     #Merge all countries into one data frame
     result = dplyr::bind_rows(countryData)
-
-    #Transforma data
-    result = result %>% gather('year','value',3:length(result))
 
     #format year
     result =as.data.frame( apply(result,2, function(x) gsub("values.","",x)))
