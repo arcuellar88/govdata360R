@@ -63,7 +63,7 @@ gov360stats <- function(country="ALL",dateRange="2010",indicatorcode="ALL"){
     }
 
   }
-  print(url)
+  #print(url)
   govdata360get.rawInd(url)
 }
 
@@ -77,10 +77,8 @@ gov360stats <- function(country="ALL",dateRange="2010",indicatorcode="ALL"){
 #' @export
 #' @examples
 #' codes=c("27712","27870")
-#' gov360stats.list(indicatorCodes=codes)
+#' gov360stats.list(pIndicators=codes)
 gov360stats.list <- function(dateRange="ALL",pIndicators,pCountry="ALL"){
-
-  scountry="ALL"
 
   #split the codes into groups of maximum 10 indicator
   df = split(pIndicators, ceiling(seq_along(pIndicators)/10))
@@ -91,8 +89,8 @@ gov360stats.list <- function(dateRange="ALL",pIndicators,pCountry="ALL"){
   {
     #Pull the data for a subset of 10 indicators
     ind = paste(as.character(df[[i]]),collapse=",")
-    print(ind)
-    indicator_list[[i]] = gov360stats(country=scountry,dateRange=dateRange,indicatorcode=ind, country =pCountry )
+    #print(ind)
+    indicator_list[[i]] = gov360stats(country=pCountry,dateRange=dateRange,indicatorcode=ind )
   }
 
   #Combine results into one data frame
