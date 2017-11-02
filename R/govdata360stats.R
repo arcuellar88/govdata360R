@@ -70,7 +70,7 @@ gov360stats <- function(country="ALL",dateRange="2010",indicatorcode="ALL"){
 #' Pull the data for a vector of indicators and ALL the countries.
 #'
 #' Data frame with the data of the specified indicators and countries
-#'
+#' @param country  Character string. ISO3 code of the countries. E.g COL for Colombia or 'ALL' for all the countries
 #' @param dateRange Character string. Range of years of the indicators
 #' @param indicatorCodes vector of indicator codes c("27712","27870")
 #' @return Data frame with  CountryCode, CountryTableName, IndicatorCode, IndicatorName, TopicName, SubTopicName, Year, Quarter, AggregationLevel, AggregatedValue, UOM
@@ -78,12 +78,12 @@ gov360stats <- function(country="ALL",dateRange="2010",indicatorcode="ALL"){
 #' @examples
 #' codes=c("27712","27870")
 #' gov360stats.list(indicatorCodes=codes)
-gov360stats.list <- function(dateRange="ALL",indicatorCodes){
+gov360stats.list <- function(dateRange="ALL",pIndicators,pCountry="ALL"){
 
   scountry="ALL"
 
   #split the codes into groups of maximum 10 indicator
-  df = split(indicatorCodes, ceiling(seq_along(indicatorCodes)/10))
+  df = split(pIndicators, ceiling(seq_along(pIndicators)/10))
 
   indicator_list = list()
 
@@ -92,7 +92,7 @@ gov360stats.list <- function(dateRange="ALL",indicatorCodes){
     #Pull the data for a subset of 10 indicators
     ind = paste(as.character(df[[i]]),collapse=",")
     print(ind)
-    indicator_list[[i]] = gov360stats(country=scountry,dateRange=dateRange,indicatorcode=ind)
+    indicator_list[[i]] = gov360stats(country=scountry,dateRange=dateRange,indicatorcode=ind, country =pCountry )
   }
 
   #Combine results into one data frame
