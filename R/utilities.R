@@ -9,12 +9,16 @@
 #' @return A data frame
 govdata360get.rawInd <- function(url) {
 
+
+
   return_get <- httr::GET(url)
   return_json <- httr::content(return_get, as = "text")
   return_list <- jsonlite::fromJSON(return_json,  flatten = TRUE)
 
   if(length(return_list$data)>0)
   {
+
+    library(tidyr)
 
     numCountry <- NROW(return_list$countries)
 
@@ -28,21 +32,23 @@ govdata360get.rawInd <- function(url) {
 
       countryData[[c]] = cbind(country,return_list$data$indicators[[c]][-2])
 
+
       #Transforma data
-      countryData[[c]] = countryData[[c]] %>% gather('year','value',3:length(countryData[[c]]))
+      col_trans<-colnames(countryData[[c]])[-(1:2)]
+      countryData[[c]] = countryData[[c]] %>% gather('year','value',col_trans)
 
       countryData[[c]] <-  countryData[[c]][!is.na( countryData[[c]]$value),] #remove rows where value=NA
     }
-
 
     #Merge all countries into one data frame
     result = dplyr::bind_rows(countryData)
 
     #format year
-    result =as.data.frame( apply(result,2, function(x) gsub("values.","",x)))
+    result$year<-gsub("values.","",result$year)
 
-     result
+    detach("package:tidyr", unload=TRUE)
 
+    return(result)
   }
   else
     print("No Data")
