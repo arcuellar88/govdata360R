@@ -20,7 +20,7 @@ gov360stats <- function(country="ALL",dateRange="2010",indicatorcode="ALL"){
 
   if(indicatorcode=="ALL"&& stringr::str_count(country, ',')>3) stop("When All indicators data is requested, data can be requested for a maximum of 4 countries")
 
-  if(country=="ALL"&& stringr::str_count(indicatorcode, ',')>9) stop("When All country data is requested, data can be requested for a maximum of 10 indicators")
+  if(country=="ALL"&& stringr::str_count(indicatorcode, ',')>20) stop("When All country data is requested, data can be requested for a maximum of 20 indicators")
 
   urlmeta <- "data/?"
   url <- ""
@@ -80,25 +80,39 @@ gov360stats <- function(country="ALL",dateRange="2010",indicatorcode="ALL"){
 #' gov360stats.list(pIndicators=codes)
 gov360stats.list <- function(dateRange="ALL",pIndicators,pCountry="ALL"){
 
-  #split the codes into groups of maximum 10 indicator
-  df = split(pIndicators, ceiling(seq_along(pIndicators)/10))
+  #split the codes into groups of maximum 20 indicator
+  df = split(pIndicators, ceiling(seq_along(pIndicators)/20))
 
   indicator_list = list()
 
+  ndf=0;
+
   for(i in 1:length(df))
   {
-    #Pull the data for a subset of 10 indicators
+    #Pull the data for a subset of 20 indicators
     ind = paste(as.character(df[[i]]),collapse=",")
     #print(ind)
-    indicator_list[[i]] = gov360stats(country=pCountry,dateRange=dateRange,indicatorcode=ind )
+    t_df = gov360stats(country=pCountry,dateRange=dateRange,indicatorcode=ind )
+    if(!('No Data' %in% t_df))
+    {
+      ndf=ndf+1
+      indicator_list[[ndf]]<-t_df
+    }
+
   }
 
+  if(ndf>0)
+  {
   #Combine results into one data frame
   full_data = dplyr::bind_rows(indicator_list)
 
   full_data <- full_data[!is.na(full_data$value),] #remove rows where value=NA
 
-  full_data
+  return(full_data)
+
+  }
+  else
+    return("No Data")
 }
 
 

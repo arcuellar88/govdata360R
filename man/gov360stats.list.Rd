@@ -4,10 +4,12 @@
 \alias{gov360stats.list}
 \title{Pull the data for a vector of indicators and ALL the countries.}
 \usage{
-gov360stats.list(dateRange = "2010", indicatorCodes)
+gov360stats.list(dateRange = "ALL", pIndicators, pCountry = "ALL")
 }
 \arguments{
 \item{dateRange}{Character string. Range of years of the indicators}
+
+\item{country}{Character string. ISO3 code of the countries. E.g COL for Colombia or 'ALL' for all the countries}
 
 \item{indicatorCodes}{vector of indicator codes c("27712","27870")}
 }
@@ -19,5 +21,5 @@ Data frame with the data of the specified indicators and countries
 }
 \examples{
 codes=c("27712","27870")
-gov360stats.list(indicatorCodes=codes)
+gov360stats.list(pIndicators=codes)
 }
